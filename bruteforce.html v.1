@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Brute Force Simulation</title>
+<style>
+body {
+    background-color: black;
+    color: #00ff00;
+    font-family: monospace;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.container {
+    border: 2px solid #00ff00;
+    padding: 30px;
+    width: 350px;
+    margin: auto;
+    box-shadow: 0 0 20px #00ff00;
+}
+
+input {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px;
+    width: 80%;
+    margin: 10px 0;
+}
+
+button {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #003300;
+}
+
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.warning {
+    color: red;
+}
+
+.locked {
+    color: orange;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🔐 Login Simulation</h2>
+    <p>Educational Brute Force Awareness Tool</p>
+
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+
+    <div id="message"></div>
+    <div id="attempts"></div>
+</div>
+
+<script>
+let correctPassword = "Cyber123!";
+let attempts = 0;
+let maxAttempts = 5;
+let locked = false;
+
+function login() {
+    if (locked) {
+        document.getElementById("message").innerHTML = "🚫 Account Locked!";
+        return;
+    }
+
+    let userPass = document.getElementById("password").value;
+    attempts++;
+
+    if (userPass === correctPassword) {
+        document.getElementById("message").innerHTML = "✅ Login Successful!";
+        document.getElementById("message").className = "";
+    } else {
+        if (attempts >= maxAttempts) {
+            locked = true;
+            document.getElementById("message").innerHTML = "🔒 Account Locked After 5 Failed Attempts!";
+            document.getElementById("message").className = "locked";
+        } else {
+            document.getElementById("message").innerHTML = "❌ Wrong Password!";
+            document.getElementById("message").className = "warning";
+        }
+    }
+
+    document.getElementById("attempts").innerHTML = 
+        "Attempts: " + attempts + " / " + maxAttempts;
+}
+</script>
+
+</body>
+</html>
