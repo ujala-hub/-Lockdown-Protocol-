@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Advanced Brute Force Simulation</title>
+<style>
+body {
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.container {
+    border: 2px solid #00ff00;
+    width: 380px;
+    margin: auto;
+    padding: 30px;
+    box-shadow: 0 0 25px #00ff00;
+}
+
+input {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px;
+    width: 85%;
+    margin: 10px 0;
+}
+
+button {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background: #003300;
+}
+
+.warning { color: red; }
+.locked { color: orange; }
+.success { color: lightgreen; }
+
+#counter {
+    margin-top: 10px;
+    font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🔐 Secure Login Simulation</h2>
+    <p>Educational Brute Force Awareness Tool</p>
+
+    <input type="password" id="password" placeholder="Enter Password"><br>
+    <button onclick="login()">Login</button>
+    <button onclick="resetSystem()">Reset</button>
+
+    <div id="message"></div>
+    <div id="counter"></div>
+    <div id="tips"></div>
+</div>
+
+<script>
+let correctPassword = "CyberSecure@2026";
+let attempts = 0;
+let maxAttempts = 5;
+let locked = false;
+let totalAttackAttempts = 0;
+
+function login() {
+    if (locked) {
+        showMessage("🔒 Account Locked! Too many failed attempts.", "locked");
+        return;
+    }
+
+    let userPass = document.getElementById("password").value;
+
+    showMessage("⏳ Checking password... (3 sec delay)", "");
+    
+    setTimeout(() => {
+
+        attempts++;
+        totalAttackAttempts++;
+
+        if (userPass === correctPassword) {
+            showMessage("✅ Login Successful!", "success");
+        } else {
+            if (attempts >= maxAttempts) {
+                locked = true;
+                showMessage("🚨 Account Locked After 5 Failed Attempts!", "locked");
+                showTips();
+            } else {
+                showMessage("❌ Wrong Password!", "warning");
+            }
+        }
+
+        updateCounter();
+
+    }, 3000);
+}
+
+function updateCounter() {
+    document.getElementById("counter").innerHTML =
+        "Failed Attempts: " + attempts + " / " + maxAttempts +
+        "<br>Total Attack Attempts: " + totalAttackAttempts;
+}
+
+function showMessage(msg, className) {
+    let message = document.getElementById("message");
+    message.innerHTML = msg;
+    message.className = className;
+}
+
+function showTips() {
+    document.getElementById("tips").innerHTML =
+        "<br>🛡️ Security Tips:<br>" +
+        "- Use strong passwords<br>" +
+        "- Enable 2FA<br>" +
+        "- Limit login attempts<br>" +
+        "- Use CAPTCHA";
+}
+
+function resetSystem() {
+    attempts = 0;
+    locked = false;
+    document.getElementById("password").value = "";
+    document.getElementById("message").innerHTML = "";
+    document.getElementById("counter").innerHTML = "";
+    document.getElementById("tips").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
